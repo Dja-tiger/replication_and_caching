@@ -1,0 +1,10 @@
+# Prometheus alerts
+- alert: ReplicationLagHigh
+  expr: pg_replication_lag_seconds > 10
+  annotations:
+    summary: "Lag is {{ $value }}s"
+
+- alert: CacheHitRateLow
+  expr: cache_hit_ratio < 80
+  annotations:
+    summary: "Hit rate is {{ $value }}%"

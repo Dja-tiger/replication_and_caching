@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТЕХНОМИР - Интернет-магазин</title>
+    <link rel="stylesheet" href="/styles.css?v=3">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-left">
+                <h1 class="logo">ТЕХНОМИР</h1>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Поиск товаров...">
+                    <button class="search-btn">🔍</button>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="cart-container">
+                    <button class="cart-btn" onclick="toggleCart()">
+                        🛒 <span id="cart-count">0</span>
+                    </button>
+                </div>
+                <div class="user-container">
+                    <div class="user-profile" onclick="toggleProfile()">
+                        👤 <span id="user-name">User</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Bestsellers Section -->
+            <section class="bestsellers-section">
+                <div class="section-header">
+                    <h2>BESTSELLERS</h2>
+                    <div class="cache-indicator ttl-cache">TTL (1h)</div>
+                </div>
+                <div class="products-grid bestsellers-grid" id="bestsellers">
+                    <!-- Products will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Recommendations Section -->
+            <section class="recommendations-section">
+                <div class="section-header">
+                    <h2>RECOMMENDED FOR YOU</h2>
+                    <div class="cache-indicator tag-cache">Tag</div>
+                    <div class="cache-indicator ttl-cache">TTL (1h)</div>
+                </div>
+                <div class="products-grid recommendations-grid" id="recommendations">
+                    <!-- Products will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Flash Sales Section -->
+            <section class="flash-sales-section">
+                <div class="section-header">
+                    <h2>FLASH SALES</h2>
+                    <div class="cache-indicator event-cache">Event</div>
+                </div>
+                <div class="flash-sales-grid" id="flash-sales">
+                    <!-- Flash sales will be loaded here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- User Profile Panel -->
+            <div class="user-panel" id="user-panel">
+                <div class="user-info">
+                    <h3>👤 User Profile</h3>
+                    <div class="user-details">
+                        <input type="text" id="user-name-input" placeholder="Имя пользователя">
+                        <button onclick="updateProfile()">Обновить профиль</button>
+                    </div>
+                    <div class="cache-controls">
+                        <h4>Управление кэшами:</h4>
+                        <button onclick="invalidateCache('bestsellers')">Инвалидировать Bestsellers</button>
+                        <button onclick="invalidateCache('recommendations')">Инвалидировать Recommendations</button>
+                        <button onclick="invalidateCache('flash-sales')">Инвалидировать Flash Sales</button>
+                        <button onclick="invalidateCache('profile')">Инвалидировать Profile</button>
+                        <button onclick="invalidateCache('all')">Инвалидировать ВСЕ</button>
+                        <button onclick="getCacheStatus()">Статус кэшей</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brands Section -->
+            <div class="brands-section">
+                <h3>BRANDS</h3>
+                <div class="brands-grid">
+                    <div class="brand-item">Apple</div>
+                    <div class="brand-item">Samsung</div>
+                    <div class="brand-item">Sony</div>
+                </div>
+            </div>
+
+            <!-- Top Comments Section -->
+            <div class="top-comments-section">
+                <h3>TOP COMMENTS</h3>
+                <div class="cache-indicator">Cached</div>
+                <div class="comments-list" id="top-comments">
+                    <!-- Comments will be loaded here -->
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Корзина</h3>
+                <button onclick="toggleCart()" class="close-btn">×</button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">Итого: <span id="cart-total">0</span> ₽</div>
+                <button class="checkout-btn">Оформить заказ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="notifications" id="notifications"></div>
+
+    <!-- Status Panel -->
+    <div class="status-panel" id="status-panel">
+        <h4>WebSocket Status</h4>
+        <div class="status-indicator" id="ws-status">Подключение...</div>
+        <div class="cache-status" id="cache-status"></div>
+    </div>
+
+    <script src="/app.js?v=8"></script>
+</body>
+</html>

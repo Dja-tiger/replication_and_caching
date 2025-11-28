@@ -1,0 +1,19 @@
+// Подключение к кластеру Техномира
+$memcached = new Memcached('technomir_pool');
+
+// Добавляем серверы с весами
+$memcached->addServers([
+    ['cache1.technomir.local', 11211, 100],  // Вес 100
+    ['cache2.technomir.local', 11211, 100],
+    ['cache3.technomir.local', 11211, 50],   // Меньше памяти
+]);
+
+// Настройки для production
+$memcached->setOptions([
+    Memcached::OPT_DISTRIBUTION =>
+        Memcached::DISTRIBUTION_CONSISTENT,
+    Memcached::OPT_LIBKETAMA_COMPATIBLE => true,
+    Memcached::OPT_NO_BLOCK => true,
+    Memcached::OPT_TCP_NODELAY => true,
+    Memcached::OPT_COMPRESSION => false,  // CPU vs Network
+]);

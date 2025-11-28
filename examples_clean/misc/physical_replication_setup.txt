@@ -1,0 +1,11 @@
+# postgresql.conf на master
+wal_level = replica
+max_wal_senders = 5
+wal_keep_size = 1GB
+
+# pg_hba.conf на master
+host replication replicator 10.0.0.0/24 md5
+
+# На replica
+pg_basebackup -h master -D /data \
+  -U replicator -Fp -Xs -P -R -v

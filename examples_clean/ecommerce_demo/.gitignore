@@ -1,0 +1,27 @@
+# Build artifacts
+backend/main
+backend/*.exe
+*.log
+
+# Dependencies
+backend/vendor/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker volumes data (local development)
+postgres_data/
+redis_data/
+grafana_data/
+prometheus_data/
+
+# Temporary files
+*.tmp
+*.bak

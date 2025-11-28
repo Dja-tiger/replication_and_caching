@@ -1,0 +1,18 @@
+// 1. Кэширование объектов каталога Техномира
+function getProduct($id) {
+    global $memcached;
+
+    $key = "product:$id";
+    $product = $memcached->get($key);
+
+    if ($memcached->getResultCode() == Memcached::RES_NOTFOUND) {
+        $product = $db->query("SELECT * FROM products WHERE id = ?", $id);
+        $memcached->set($key, $product, 3600); // TTL 1 час
+    }
+
+    return $product;
+}
+
+// 2. Кэширование сессий
+ini_set('session.save_handler', 'memcached');
+ini_set('session.save_path', 'cache1:11211,cache2:11211');

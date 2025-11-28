@@ -1,0 +1,10 @@
+redis.register_function('cache_with_ttl',
+  function(keys, args)
+    local value = redis.call('GET', keys[1])
+    if not value then
+      -- Здесь вызов внешней функции через args
+      value = args[1]  -- Предварительно вычисленное значение
+      redis.call('SETEX', keys[1], 3600, value)
+    end
+    return value
+  end)

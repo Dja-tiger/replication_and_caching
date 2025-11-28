@@ -1,0 +1,15 @@
+# Первый запрос
+GET /style.css HTTP/1.1
+
+# Ответ
+HTTP/1.1 200 OK
+Last-Modified: Mon, 17 Sep 2024 10:00:00 GMT
+Content-Length: 50000
+
+# Повторный запрос
+GET /style.css HTTP/1.1
+If-Modified-Since: Mon, 17 Sep 2024 10:00:00 GMT
+
+# Ответ если не изменился
+HTTP/1.1 304 Not Modified
+# Тело ответа пустое - экономим трафик!

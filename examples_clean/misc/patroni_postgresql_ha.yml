@@ -1,0 +1,12 @@
+scope: postgres-cluster
+name: node1
+
+bootstrap:
+  dcs:
+    ttl: 30
+    loop_wait: 10
+    maximum_lag_on_failover: 1048576
+    postgresql:
+      parameters:
+        wal_level: replica
+        max_connections: 100

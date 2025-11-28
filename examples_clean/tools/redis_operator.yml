@@ -1,0 +1,11 @@
+apiVersion: redis.redis.opstreelabs.in/v1beta2
+kind: RedisCluster
+metadata:
+  name: redis-cache
+spec:
+  clusterSize: 6
+
+  redisConfig:
+    maxmemory: "8gb"
+    maxmemory-policy: "allkeys-lru"
+    cluster-require-full-coverage: "no"

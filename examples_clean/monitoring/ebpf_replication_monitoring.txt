@@ -1,0 +1,14 @@
+// eBPF программа для отслеживания lag
+SEC("kprobe/tcp_sendmsg")
+int trace_replication(struct pt_regs *ctx) {
+    u64 timestamp = bpf_ktime_get_ns();
+    struct data_t data = {};
+
+    // Захват размера WAL
+    bpf_probe_read(&data.size, sizeof(data.size),
+                   (void *)PT_REGS_PARM3(ctx));
+
+    // Отправка в userspace
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}

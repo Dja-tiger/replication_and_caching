@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товар - ТЕХНОМИР</title>
+    <link rel="stylesheet" href="/styles.css?v=3">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-left">
+                <h1 class="logo"><a href="/" style="color: inherit; text-decoration: none;">ТЕХНОМИР</a></h1>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Поиск товаров...">
+                    <button class="search-btn">🔍</button>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="cart-container">
+                    <button class="cart-btn" onclick="toggleCart()">
+                        🛒 <span id="cart-count">0</span>
+                    </button>
+                </div>
+                <div class="user-container">
+                    <div class="user-profile" onclick="toggleProfile()">
+                        👤 <span id="user-name">User</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <!-- Product Details -->
+        <div class="product-details-container">
+            <div class="breadcrumb">
+                <a href="/">Главная</a> / <span id="product-category">Категория</span> / <span id="product-breadcrumb">Товар</span>
+            </div>
+
+            <div class="product-details">
+                <div class="product-gallery">
+                    <div class="product-main-image">
+                        <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="300" fill="#F5F5F5"/>
+                            <rect x="100" y="80" width="100" height="120" rx="10" fill="#D0D0D0"/>
+                            <circle cx="150" cy="140" r="30" fill="#B0B0B0"/>
+                            <rect x="90" y="210" width="120" height="10" rx="5" fill="#D0D0D0"/>
+                            <rect x="80" y="230" width="140" height="8" rx="4" fill="#E0E0E0"/>
+                            <rect x="85" y="248" width="130" height="8" rx="4" fill="#E0E0E0"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <h1 id="product-name">Загрузка...</h1>
+                    <div class="product-brand" id="product-brand"></div>
+                    <div class="product-rating">
+                        <span id="product-rating">★★★★☆</span>
+                        <span class="rating-count">(0 отзывов)</span>
+                    </div>
+
+                    <div class="product-price-block">
+                        <div id="product-price"></div>
+                        <div class="product-stock" id="product-stock"></div>
+                    </div>
+
+                    <div class="product-description" id="product-description"></div>
+
+                    <div class="product-actions">
+                        <button class="btn-primary" onclick="addProductToCart()">Добавить в корзину</button>
+                        <button class="btn-secondary" onclick="buyNow()">Купить сейчас</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="product-tabs">
+                <div class="tab-headers">
+                    <button class="tab-header active" onclick="switchTab('description')">Описание</button>
+                    <button class="tab-header" onclick="switchTab('specs')">Характеристики</button>
+                    <button class="tab-header" onclick="switchTab('reviews')">Отзывы</button>
+                </div>
+                <div class="tab-content">
+                    <div id="tab-description" class="tab-pane active">
+                        <p id="full-description"></p>
+                    </div>
+                    <div id="tab-specs" class="tab-pane">
+                        <table class="specs-table" id="specs-table">
+                            <!-- Specs will be loaded here -->
+                        </table>
+                    </div>
+                    <div id="tab-reviews" class="tab-pane">
+                        <div id="reviews-container">
+                            <!-- Reviews will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Корзина</h3>
+                <button onclick="toggleCart()" class="close-btn">×</button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">Итого: <span id="cart-total">0</span> ₽</div>
+                <button class="checkout-btn">Оформить заказ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="notifications" id="notifications"></div>
+
+    <!-- Status Panel -->
+    <div class="status-panel" id="status-panel">
+        <h4>WebSocket Status</h4>
+        <div class="status-indicator" id="ws-status">Подключение...</div>
+    </div>
+
+    <script src="/app.js?v=7"></script>
+    <script>
+        // Дополнительные функции для страницы товара
+        let currentProduct = null;
+
+        function addProductToCart() {
+            if (currentProduct) {
+                addToCart(currentProduct.id);
+            }
+        }
+
+        function buyNow() {
+            if (currentProduct) {
+                addToCart(currentProduct.id);
+                window.location.href = '/cart';
+            }
+        }
+
+        function switchTab(tabName) {
+            // Убираем активный класс со всех вкладок
+            document.querySelectorAll('.tab-header').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+
+            // Добавляем активный класс к выбранной вкладке
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+    </script>
+</body>
+</html>

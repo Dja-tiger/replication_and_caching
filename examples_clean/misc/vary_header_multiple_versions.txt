@@ -1,0 +1,12 @@
+# Запрос мобильного клиента
+GET /page HTTP/1.1
+User-Agent: Mobile/1.0
+
+# Запрос десктопного клиента
+GET /page HTTP/1.1
+User-Agent: Desktop/2.0
+
+# Ответ сервера
+HTTP/1.1 200 OK
+Vary: User-Agent, Accept-Language
+Cache-Control: public, max-age=3600
